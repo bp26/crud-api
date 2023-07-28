@@ -1,5 +1,6 @@
 import * as http from 'http';
 import Router from './routers/Router';
+import 'dotenv/config';
 
 http
   .createServer((req, res) => {
@@ -7,4 +8,4 @@ http
       Router.match(req, res);
     }
   })
-  .listen(3000);
+  .listen(process.env.PORT);
