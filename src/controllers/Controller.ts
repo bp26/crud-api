@@ -9,7 +9,9 @@ class Controller {
   public getAllUsers(res: ServerResponse) {
     try {
       const users = Service.getAllUsers();
-      res.writeHead(200);
+      res.writeHead(200, {
+        'Content-type': 'application/json',
+      });
       res.write(JSON.stringify(users));
       res.end();
     } catch (error) {
@@ -21,7 +23,9 @@ class Controller {
     try {
       const id = parseUrlId(req.url!);
       const user = Service.getUser(id);
-      res.writeHead(200);
+      res.writeHead(200, {
+        'Content-type': 'application/json',
+      });
       res.write(JSON.stringify(user));
       res.end();
     } catch (error) {
@@ -33,7 +37,9 @@ class Controller {
     try {
       const body = (await getRequestBody(req)) as UserData;
       const user = Service.createUser(body);
-      res.writeHead(201);
+      res.writeHead(201, {
+        'Content-type': 'application/json',
+      });
       res.write(JSON.stringify(user));
       res.end();
     } catch (error) {
@@ -46,7 +52,9 @@ class Controller {
       const id = parseUrlId(req.url!);
       const body = (await getRequestBody(req)) as UserData;
       const user = Service.updateUser(id, body);
-      res.writeHead(200);
+      res.writeHead(200, {
+        'Content-type': 'application/json',
+      });
       res.write(JSON.stringify(user));
       res.end();
     } catch (error) {
