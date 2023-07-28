@@ -28,6 +28,10 @@ class Router {
           Controller.deleteUser(req, res);
           break;
       }
+    } else {
+      res.writeHead(404);
+      res.write(JSON.stringify({ message: `Endpoint '${req.url}' doesn't exist` }));
+      res.end();
     }
   }
 }
