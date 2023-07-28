@@ -72,7 +72,7 @@ class Controller {
       } else {
         res.writeHead(500);
       }
-      res.write(JSON.stringify({ message: e.message }));
+      res.write(JSON.stringify({ message: 'The server encountered an unexpected condition that prevented it from fulfilling the request' }));
       res.end();
     }
   }
