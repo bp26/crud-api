@@ -6,6 +6,7 @@
   "scripts": {
     "start:prod": "tsc && node dist/index.js",
     "start:dev": "nodemon src/index.ts",
+    "start:multi": "npm run start:dev -- -multi",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
