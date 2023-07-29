@@ -6,13 +6,13 @@ const request = supertest(server);
 
 const user = {
   username: 'Oleg',
-  age: '34',
+  age: 34,
   hobbies: ['swimming'],
 };
 
 const updatedUser = {
   username: 'Oleg',
-  age: '35',
+  age: 35,
   hobbies: ['swimming', 'jogging'],
 };
 
