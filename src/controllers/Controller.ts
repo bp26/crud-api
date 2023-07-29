@@ -76,10 +76,14 @@ class Controller {
   private handleError(res: ServerResponse, e: unknown) {
     if (e instanceof Error) {
       if (e instanceof ServerError) {
-        res.writeHead(e.status);
+        res.writeHead(e.status, {
+          'Content-type': 'application/json',
+        });
         res.write(JSON.stringify({ message: e.message }));
       } else {
-        res.writeHead(500);
+        res.writeHead(500, {
+          'Content-type': 'application/json',
+        });
         res.write(JSON.stringify({ message: 'The server encountered an unexpected condition that prevented it from fulfilling the request' }));
       }
       res.end();
