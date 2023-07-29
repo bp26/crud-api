@@ -9,7 +9,7 @@
     "start:multi": "npm run start:dev -- -multi",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "test": "cross-env jest --config ./jest.config.json --detectOpenHandles"
+    "test": "cross-env jest --config ./jest.config.json"
   },
   "author": "",
   "license": "ISC",

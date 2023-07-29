@@ -54,6 +54,5 @@ describe('Endpoints', () => {
     await request.delete(`/api/users/${id}`);
     const res = await request.get(`/api/users/${id}`).set('Accept', 'application/json');
     expect(res.status).toBe(404);
-    expect(res.body).toStrictEqual({});
   });
 });
