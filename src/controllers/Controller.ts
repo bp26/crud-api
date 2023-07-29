@@ -4,16 +4,13 @@ import { parseUrlId } from '../utils/helpers/parseUrlId';
 import { getRequestBody } from '../utils/helpers/getRequestBody';
 import { UserData } from '../utils/types/interfaces';
 import ServerError from '../utils/ServerError';
+import { sendServerResponse } from '../utils/helpers/sendServerResponse';
 
 class Controller {
   public getAllUsers(res: ServerResponse) {
     try {
       const users = Service.getAllUsers();
-      res.writeHead(200, {
-        'Content-type': 'application/json',
-      });
-      res.write(JSON.stringify(users));
-      res.end();
+      sendServerResponse(res, 200, users);
     } catch (error) {
       this.handleError(res, error);
     }
@@ -23,11 +20,7 @@ class Controller {
     try {
       const id = parseUrlId(req.url!);
       const user = Service.getUser(id);
-      res.writeHead(200, {
-        'Content-type': 'application/json',
-      });
-      res.write(JSON.stringify(user));
-      res.end();
+      sendServerResponse(res, 200, user);
     } catch (error) {
       this.handleError(res, error);
     }
@@ -37,11 +30,7 @@ class Controller {
     try {
       const body = (await getRequestBody(req)) as UserData;
       const user = Service.createUser(body);
-      res.writeHead(201, {
-        'Content-type': 'application/json',
-      });
-      res.write(JSON.stringify(user));
-      res.end();
+      sendServerResponse(res, 201, user);
     } catch (error) {
       this.handleError(res, error);
     }
@@ -52,11 +41,7 @@ class Controller {
       const id = parseUrlId(req.url!);
       const body = (await getRequestBody(req)) as UserData;
       const user = Service.updateUser(id, body);
-      res.writeHead(200, {
-        'Content-type': 'application/json',
-      });
-      res.write(JSON.stringify(user));
-      res.end();
+      sendServerResponse(res, 200, user);
     } catch (error) {
       this.handleError(res, error);
     }
@@ -66,8 +51,7 @@ class Controller {
     try {
       const id = parseUrlId(req.url!);
       Service.deleteUser(id);
-      res.writeHead(204);
-      res.end();
+      sendServerResponse(res, 204);
     } catch (error) {
       this.handleError(res, error);
     }
@@ -76,17 +60,10 @@ class Controller {
   private handleError(res: ServerResponse, e: unknown) {
     if (e instanceof Error) {
       if (e instanceof ServerError) {
-        res.writeHead(e.status, {
-          'Content-type': 'application/json',
-        });
-        res.write(JSON.stringify({ message: e.message }));
+        sendServerResponse(res, e.status, { message: e.message });
       } else {
-        res.writeHead(500, {
-          'Content-type': 'application/json',
-        });
-        res.write(JSON.stringify({ message: 'The server encountered an unexpected condition that prevented it from fulfilling the request' }));
+        sendServerResponse(res, 500, { message: 'The server encountered an unexpected condition that prevented it from fulfilling the request' });
       }
-      res.end();
     }
   }
 }

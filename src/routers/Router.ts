@@ -2,6 +2,7 @@ import { ApiMode, HTTPMethods } from '../utils/types/enums';
 import Controller from '../controllers/Controller';
 
 import { IncomingMessage, ServerResponse } from 'http';
+import { sendServerResponse } from '../utils/helpers/sendServerResponse';
 
 class Router {
   public match(req: IncomingMessage, res: ServerResponse) {
@@ -29,9 +30,7 @@ class Router {
           break;
       }
     } else {
-      res.writeHead(404);
-      res.write(JSON.stringify({ message: `Endpoint '${req.url}' doesn't exist` }));
-      res.end();
+      sendServerResponse(res, 404, { message: `Endpoint '${req.url}' doesn't exist` });
     }
   }
 }
