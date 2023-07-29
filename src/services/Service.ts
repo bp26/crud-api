@@ -2,6 +2,8 @@ import { state } from '../state/state';
 import ServerError from '../utils/ServerError';
 import { v4, validate } from 'uuid';
 import { UserData } from '../utils/types/interfaces';
+import { validateUserData } from '../utils/helpers/validateUserData';
+import { filterUserFields } from '../utils/helpers/filterUserFields';
 
 class Service {
   public getAllUsers() {
@@ -27,9 +29,14 @@ class Service {
     if (!data.username || !data.age || !data.hobbies) {
       throw new ServerError(400, 'All required fields should be filled');
     }
+
+    if (!validateUserData(data)) {
+      throw new ServerError(400, 'Some of the fields are filled in incorrectly');
+    }
+
     const user = {
       id: v4(),
-      ...data,
+      ...filterUserFields(data),
     };
     state.users.push(user);
 
@@ -47,7 +54,11 @@ class Service {
       throw new ServerError(404, `User doesn't exist`);
     }
 
-    const updatedUser = { ...user, ...data };
+    if (!validateUserData(data)) {
+      throw new ServerError(400, 'Some of the fields are filled in incorrectly');
+    }
+
+    const updatedUser = { ...user, ...filterUserFields(data) };
 
     const users = state.users.map((item) => {
       if (item.id === id) {
