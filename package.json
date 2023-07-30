@@ -6,7 +6,6 @@
   "scripts": {
     "start:prod": "cross-env NODE_ENV=production tsc && node dist/index.js",
     "start:dev": "cross-env NODE_ENV=development nodemon src/index.ts",
-    "start:multi": "cross-env NODE_ENV=development npm run start:dev -- -multi",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "test": "cross-env jest --config ./jest.config.json"

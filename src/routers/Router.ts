@@ -1,4 +1,4 @@
-import { ApiMode, HTTPMethods } from '../utils/types/enums';
+import { HTTPMethods } from '../utils/types/enums';
 import Controller from '../controllers/Controller';
 
 import { IncomingMessage, ServerResponse } from 'http';
@@ -6,9 +6,7 @@ import { sendServerResponse } from '../utils/helpers/sendServerResponse';
 
 class Router {
   public match(req: IncomingMessage, res: ServerResponse) {
-    const endpoint = process.env.mode === ApiMode.MULTI_INSTANCE ? 'api' : 'api/users';
-
-    if (new RegExp(`^/${endpoint}/?$`).test(req.url!)) {
+    if (new RegExp(`^/api/users/?$`).test(req.url!)) {
       switch (req.method) {
         case HTTPMethods.GET:
           Controller.getAllUsers(res);
@@ -17,7 +15,7 @@ class Router {
           Controller.createUser(req, res);
           break;
       }
-    } else if (new RegExp(`^/${endpoint}/[^/]+/?$`).test(req.url!)) {
+    } else if (new RegExp(`^/api/users/[^/]+/?$`).test(req.url!)) {
       switch (req.method) {
         case HTTPMethods.GET:
           Controller.getUser(req, res);
